@@ -1,0 +1,1378 @@
+/* ================= Khung trang ================= */
+.invitation {
+  min-height: 100vh;
+  background: #e9dfd2;
+  color: var(--wine);
+  font-family: var(--font-serif);
+}
+
+.invitation__paper {
+  position: relative;
+  max-width: 480px;
+  margin: 0 auto;
+  overflow: hidden;
+  background-color: var(--paper);
+  /* vân giấy nhẹ thay cho ảnh paper.webp */
+  background-image:
+    radial-gradient(rgba(81, 20, 25, 0.035) 1px, transparent 1px),
+    radial-gradient(rgba(81, 20, 25, 0.025) 1px, transparent 1px);
+  background-size: 7px 7px, 11px 11px;
+  background-position: 0 0, 3px 5px;
+  box-shadow: 0 0 40px rgba(81, 20, 25, 0.12);
+}
+
+.page-loading {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  color: var(--wine);
+  font-size: 32px;
+  background: var(--paper);
+  animation: pulse 1.2s ease-in-out infinite;
+}
+
+/* ================= Hiệu ứng ================= */
+@keyframes drFloat {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+@keyframes pulse {
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.float-anim {
+  display: inline-block;
+  animation: drFloat 5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.reveal {
+  opacity: 0;
+  transform: translateY(32px);
+  transition:
+    opacity 0.9s ease,
+    transform 0.9s ease;
+}
+
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* ================= Tiêu đề, chữ chung ================= */
+.section-title {
+  margin: 0 0 18px;
+  text-align: center;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  color: var(--wine);
+}
+
+.section-title--light {
+  color: var(--cream);
+}
+
+.muted {
+  text-align: center;
+  color: rgba(81, 20, 25, 0.8);
+}
+
+.muted-light {
+  margin: 0 0 6px;
+  text-align: center;
+  font-size: 15px;
+  color: var(--cream-70);
+  letter-spacing: 0.04em;
+}
+
+.light-section {
+  position: relative;
+  padding: 44px 24px;
+}
+
+/* ================= Màn hình mở thiệp ================= */
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #6a1820, var(--wine) 50%, #3e0d11);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s ease;
+}
+
+.intro--closing {
+  opacity: 0;
+  transform: scale(1.08);
+  pointer-events: none;
+}
+
+.hearts span {
+  position: absolute;
+  bottom: -30px;
+  animation: heartRise linear infinite;
+}
+
+@keyframes heartRise {
+  0% {
+    transform: translateY(0) rotate(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(-110vh) rotate(25deg);
+    opacity: 0;
+  }
+}
+
+.intro__card {
+  position: relative;
+  width: min(380px, 100%);
+  padding: 26px 70px 30px;
+  text-align: center;
+  color: var(--wine);
+  background: #f7f0e8;
+  border-radius: 6px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  animation: popIn 0.6s ease;
+}
+
+.intro__flower {
+  position: absolute;
+  top: 20px;
+  width: 92px;
+  pointer-events: none;
+}
+
+.intro__flower--left {
+  left: -8px;
+}
+
+.intro__flower--right {
+  right: -8px;
+}
+
+.intro__heart {
+  width: 50px;
+  height: 50px;
+  margin: 0 auto 12px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #7a1f2a, #3e0d11);
+  color: #fff;
+  font-size: 22px;
+  box-shadow: 0 6px 14px rgba(81, 20, 25, 0.4);
+  animation: heartbeat 1.8s ease-in-out infinite;
+}
+
+.intro__names {
+  margin: 0;
+  font-family: var(--font-script);
+  font-size: 32px;
+  line-height: 1.15;
+}
+
+.intro__names span {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  line-height: 1;
+}
+
+.intro__divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin: 12px 0 8px;
+  color: var(--wine-2);
+}
+
+.intro__divider::before,
+.intro__divider::after {
+  content: '';
+  width: 40px;
+  height: 1px;
+  background: var(--wine-soft);
+}
+
+.intro__date {
+  margin: 0;
+  font-size: 18px;
+  color: rgba(81, 20, 25, 0.8);
+}
+
+.intro__invite {
+  margin: 18px 0 0;
+  font-size: 18px;
+  color: rgba(81, 20, 25, 0.8);
+}
+
+.intro__guest {
+  margin: 4px 0 0;
+  font-family: var(--font-hand);
+  font-size: 38px;
+  line-height: 1.15;
+  color: var(--wine);
+  word-break: break-word;
+}
+
+.intro__btn {
+  margin-top: 20px;
+  padding: 12px 34px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--wine);
+  color: #fff;
+  font-family: var(--font-serif);
+  font-size: 18px;
+  font-weight: 700;
+  box-shadow: 0 8px 18px rgba(81, 20, 25, 0.35);
+  transition: transform 0.15s;
+}
+
+.intro__btn:hover {
+  transform: translateY(-2px);
+}
+
+/* ================= Hero ================= */
+.hero {
+  position: relative;
+  padding: 44px 24px 36px;
+  text-align: center;
+}
+
+.hero__eyebrow {
+  margin: 0 0 18px;
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 22px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: #590310;
+}
+
+.envelope {
+  position: relative;
+  width: 280px;
+  height: 300px;
+  margin: 0 auto;
+}
+
+.envelope__back {
+  position: absolute;
+  inset: 90px 0 0;
+  border-radius: 6px;
+  background: linear-gradient(160deg, #6a1d24, var(--wine));
+  box-shadow: 0 18px 30px rgba(81, 20, 25, 0.3);
+}
+
+/* nắp phong bì phía sau */
+.envelope__back::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -70px;
+  height: 70px;
+  background: #5e1a20;
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+}
+
+.envelope__photo {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 190px;
+  margin-left: -95px;
+  padding: 8px 8px 26px;
+  background: #fff;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+  z-index: 1;
+}
+
+.envelope__photo img {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+}
+
+.envelope__front {
+  position: absolute;
+  inset: 150px 0 0;
+  z-index: 2;
+  border-radius: 0 0 6px 6px;
+  background: linear-gradient(180deg, #6a1d24, #4a1015);
+  clip-path: polygon(0 0, 50% 45%, 100% 0, 100% 100%, 0 100%);
+}
+
+.envelope__flower {
+  position: absolute;
+  z-index: 3;
+  left: -40px;
+  top: 40px;
+  width: 120px;
+  rotate: -12deg;
+}
+
+.envelope__seal {
+  position: absolute;
+  z-index: 4;
+  left: 50%;
+  top: 205px;
+  width: 46px;
+  height: 46px;
+  margin-left: -23px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: #7a5a1a;
+  font-size: 20px;
+  background: radial-gradient(circle at 35% 30%, #f0d58a, var(--gold) 55%, var(--gold-2));
+  box-shadow:
+    0 0 0 3px rgba(181, 139, 47, 0.45),
+    0 4px 10px rgba(0, 0, 0, 0.35);
+}
+
+.hero__names {
+  margin-top: 26px;
+  position: relative;
+}
+
+.hero__names p {
+  margin: 0;
+  font-family: var(--font-script);
+  font-size: 44px;
+  line-height: 1.15;
+}
+
+/* Lời mời theo tên khách */
+.guest-greeting {
+  margin: 28px auto 0;
+  padding: 18px 16px;
+  max-width: 340px;
+  border-top: 1px solid var(--wine-soft);
+  border-bottom: 1px solid var(--wine-soft);
+}
+
+.guest-greeting__label {
+  margin: 0;
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  color: rgba(81, 20, 25, 0.8);
+}
+
+.guest-greeting__label:first-child {
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 13px;
+}
+
+.guest-greeting__name {
+  margin: 6px 0;
+  font-family: var(--font-hand);
+  font-size: 42px;
+  line-height: 1.15;
+}
+
+/* ================= Khối đỏ đậm ================= */
+.dark-section {
+  position: relative;
+  padding: 28px 16px;
+}
+
+.dark-section__card {
+  position: relative;
+  padding: 44px 22px 36px;
+  border-radius: 4px;
+  color: var(--cream);
+  text-align: center;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 255, 255, 0.06), transparent 50%),
+    linear-gradient(170deg, #5c171d, var(--wine) 50%, #45100f);
+  box-shadow: 0 16px 34px rgba(81, 20, 25, 0.28);
+}
+
+/* viền kép mảnh bên trong */
+.dark-section__card::before {
+  content: '';
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(236, 228, 216, 0.25);
+  pointer-events: none;
+}
+
+.floating-flower {
+  position: absolute;
+  z-index: 2;
+  width: 110px;
+  pointer-events: none;
+}
+
+.floating-flower > span {
+  display: block;
+}
+
+.floating-flower svg,
+.envelope__flower svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+.floating-flower--right {
+  right: -22px;
+}
+
+.floating-flower--left {
+  left: -22px;
+}
+
+/* ================= Lễ cưới ================= */
+.families {
+  display: grid;
+  grid-template-columns: 1fr 1px 1fr;
+  gap: 12px;
+}
+
+.families__divider {
+  background: rgba(236, 228, 216, 0.4);
+}
+
+.family {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-size: 15px;
+}
+
+.family__label {
+  color: var(--cream-70);
+}
+
+.family__name {
+  font-weight: 600;
+}
+
+.family__address {
+  margin-top: 4px;
+  font-size: 13px;
+  color: var(--cream-70);
+}
+
+.announcement {
+  margin: 28px 0 8px;
+  white-space: pre-line;
+  font-size: 16px;
+  letter-spacing: 0.06em;
+  line-height: 1.6;
+}
+
+.couple {
+  margin: 8px 0 26px;
+}
+
+.couple h3 {
+  margin: 0;
+  font-family: var(--font-script);
+  font-size: 40px;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.couple__title {
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cream-70);
+}
+
+.couple__amp {
+  margin: 6px 0;
+  font-family: var(--font-amp);
+  font-size: 42px;
+  line-height: 1;
+}
+
+/* ================= Khối ngày ================= */
+.date-block {
+  margin: 8px 0 4px;
+}
+
+.date-block__meta {
+  font-size: 15px;
+  letter-spacing: 0.08em;
+  color: var(--cream-70);
+}
+
+.date-block__main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin: 8px 0;
+  font-family: var(--font-head);
+}
+
+.date-block__day {
+  font-size: 58px;
+  line-height: 1;
+}
+
+.date-block__divider {
+  width: 1px;
+  height: 52px;
+  background: rgba(236, 228, 216, 0.45);
+}
+
+.date-block__month {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 18px;
+  letter-spacing: 0.06em;
+}
+
+.date-block__lunar {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--cream-70);
+}
+
+/* ================= Album 3D ================= */
+.album__stage {
+  position: relative;
+  height: 380px;
+  perspective: 1000px;
+}
+
+.album__track {
+  position: relative;
+  width: 220px;
+  height: 100%;
+  margin: 0 auto;
+  transform-style: preserve-3d;
+}
+
+.album__slide {
+  position: absolute;
+  inset: 0;
+  transition:
+    transform 1.1s cubic-bezier(0.25, 0.8, 0.25, 1),
+    opacity 1.1s ease;
+  cursor: pointer;
+}
+
+.album__slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.25);
+}
+
+.album__nav {
+  position: absolute;
+  top: 50%;
+  z-index: 200;
+  width: 36px;
+  height: 36px;
+  margin-top: -18px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--wine);
+  font-size: 24px;
+  line-height: 1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.album__nav--prev {
+  left: 0;
+}
+
+.album__nav--next {
+  right: 0;
+}
+
+.album__dots {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 20px;
+}
+
+.album__dots button {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 99px;
+  background: var(--wine-soft);
+  transition: width 0.3s;
+}
+
+.album__dots button.is-active {
+  width: 22px;
+  background: var(--wine);
+}
+
+/* ================= Lightbox ================= */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  flex-direction: column;
+  background: rgba(10, 2, 3, 0.94);
+  color: #fff;
+  animation: fadeIn 0.2s;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 22px;
+}
+
+.lightbox__counter {
+  padding: 16px;
+  text-align: center;
+  font-family: var(--font-ui);
+  font-size: 14px;
+}
+
+.lightbox__main {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox__main img {
+  max-width: calc(100% - 96px);
+  max-height: 100%;
+  object-fit: contain;
+}
+
+.lightbox__nav {
+  width: 48px;
+  border: 0;
+  background: none;
+  color: #fff;
+  font-size: 40px;
+}
+
+.lightbox__thumbs {
+  display: flex;
+  gap: 8px;
+  padding: 14px;
+  overflow-x: auto;
+  justify-content: center;
+}
+
+.lightbox__thumbs button {
+  flex: 0 0 auto;
+  padding: 0;
+  border: 0;
+  opacity: 0.5;
+  background: none;
+}
+
+.lightbox__thumbs button.is-active {
+  opacity: 1;
+  outline: 2px solid var(--cream);
+  outline-offset: 2px;
+}
+
+.lightbox__thumbs img {
+  width: 48px;
+  height: 64px;
+  object-fit: cover;
+}
+
+/* ================= Tiệc cưới ================= */
+.reception__heading {
+  margin: 0 0 8px;
+  font-size: 16px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.reception__times {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 18px 0 22px;
+}
+
+.reception__times div {
+  display: flex;
+  flex-direction: column;
+}
+
+.reception__times span {
+  color: var(--cream-70);
+  font-size: 14px;
+}
+
+.reception__times strong {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+.calendar {
+  margin: 0 auto 18px;
+  max-width: 320px;
+  padding: 16px 14px 18px;
+  border-radius: 4px;
+  background: var(--cream);
+  color: var(--wine);
+}
+
+.calendar__title {
+  padding-bottom: 6px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(81, 20, 25, 0.27);
+  font-family: var(--font-hand);
+  font-size: 26px;
+}
+
+.calendar__grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  row-gap: 6px;
+  font-family: var(--font-head);
+  font-size: 14px;
+}
+
+.calendar__grid--head {
+  margin-bottom: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--wine);
+  font-weight: 700;
+}
+
+.calendar__day {
+  position: relative;
+  height: 30px;
+  display: grid;
+  place-items: center;
+}
+
+.calendar__day svg {
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  fill: var(--wine);
+  animation: heartbeat 1.6s ease-in-out infinite;
+}
+
+.calendar__day.is-wedding span {
+  position: relative;
+  color: #fff;
+  font-weight: 700;
+}
+
+@keyframes heartbeat {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  15% {
+    transform: scale(1.15);
+  }
+  30% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.1);
+  }
+}
+
+/* ================= Nút ================= */
+.btn-cream,
+.btn-outline-light,
+.btn-primary,
+.btn-soft {
+  display: inline-block;
+  padding: 12px 26px;
+  border-radius: 999px;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.06em;
+  text-decoration: none;
+  transition:
+    transform 0.15s,
+    opacity 0.15s;
+}
+
+.btn-cream:active,
+.btn-primary:active,
+.btn-outline-light:active {
+  transform: scale(0.97);
+}
+
+.btn-cream {
+  display: block;
+  width: 100%;
+  max-width: 320px;
+  margin: 14px auto 0;
+  border: 0;
+  background: var(--cream);
+  color: var(--wine);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+}
+
+.btn-outline-light {
+  border: 1px solid rgba(236, 228, 216, 0.6);
+  color: var(--cream);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 8px 20px;
+}
+
+.btn-primary {
+  border: 0;
+  background: var(--wine);
+  color: #ded9d7;
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+}
+
+.btn-soft {
+  border: 0;
+  background: rgba(81, 20, 25, 0.08);
+  color: var(--wine);
+  font-size: 14px;
+  padding: 8px 18px;
+}
+
+.btn-icon {
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(81, 20, 25, 0.1);
+  font-size: 18px;
+}
+
+/* ================= Form ================= */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.form input,
+.form select,
+.form textarea {
+  width: 100%;
+  padding: 11px 14px;
+  border: 1px solid var(--wine);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--wine);
+  font-family: var(--font-serif);
+  font-size: 16px;
+  resize: none;
+}
+
+.form input::placeholder,
+.form textarea::placeholder {
+  color: rgba(81, 20, 25, 0.55);
+}
+
+.form input:focus,
+.form select:focus,
+.form textarea:focus {
+  outline: 2px solid rgba(81, 20, 25, 0.25);
+}
+
+.form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.form__row label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 14px;
+}
+
+.form__choices {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.form__choices label {
+  padding: 10px;
+  border: 1px solid var(--wine-soft);
+  border-radius: 8px;
+  text-align: center;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.form__choices label.is-checked {
+  border-color: var(--wine);
+  background: var(--wine);
+  color: var(--cream);
+}
+
+.form__choices input {
+  display: none;
+}
+
+.form__error {
+  margin: 0;
+  color: #b3261e;
+  font-size: 14px;
+}
+
+.rsvp-done {
+  text-align: center;
+  font-size: 20px;
+}
+
+/* ================= Bản đồ ================= */
+.venue {
+  text-align: center;
+}
+
+.venue__address {
+  margin: 0 0 16px;
+  font-size: 16px;
+  color: rgba(81, 20, 25, 0.8);
+}
+
+.venue__map {
+  width: 100%;
+  height: 240px;
+  border: 1px solid var(--wine);
+  border-radius: 8px;
+}
+
+.venue__btn {
+  margin-top: 14px;
+}
+
+/* ================= Dress code ================= */
+.dress-code__swatches {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.dress-code__swatches span {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1.5px solid rgba(81, 20, 25, 0.19);
+  box-shadow: 0 4px 10px rgba(81, 20, 25, 0.15);
+}
+
+/* ================= Timeline ================= */
+.timeline {
+  list-style: none;
+  margin: 0 auto;
+  padding: 0;
+  max-width: 300px;
+}
+
+.timeline__item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 24px 1fr;
+  align-items: center;
+  min-height: 56px;
+}
+
+.timeline__time {
+  text-align: right;
+  font-family: var(--font-head);
+  font-size: 20px;
+}
+
+.timeline__label {
+  text-align: left;
+  color: var(--cream-70);
+  font-size: 16px;
+}
+
+/* đường dọc nối các mốc */
+.timeline__dot {
+  position: relative;
+  justify-self: center;
+  height: 100%;
+  width: 24px;
+}
+
+.timeline__dot::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 1px;
+  background: rgba(236, 228, 216, 0.4);
+}
+
+.timeline__dot::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin: -4.5px 0 0 -4.5px;
+  border-radius: 50%;
+  background: var(--cream);
+  box-shadow: 0 0 0 3px rgba(236, 228, 216, 0.13);
+}
+
+.timeline__item:first-child .timeline__dot::before {
+  top: 50%;
+}
+
+.timeline__item:last-child .timeline__dot::before {
+  bottom: 50%;
+}
+
+.timeline__item > :first-child {
+  padding-right: 10px;
+}
+
+.timeline__item > :last-child {
+  padding-left: 10px;
+}
+
+/* ================= Sổ lưu bút ================= */
+.guestbook {
+  background: linear-gradient(180deg, transparent, rgba(236, 228, 216, 0.5));
+}
+
+.guestbook__card {
+  position: relative;
+  padding: 26px 22px 22px;
+  background: #fbf8f3;
+  border-radius: 6px;
+  box-shadow: 0 14px 34px rgba(81, 20, 25, 0.18);
+}
+
+.guestbook__card .section-title {
+  margin-bottom: 6px;
+}
+
+.guestbook__flower {
+  position: absolute;
+  left: -36px;
+  bottom: -40px;
+  width: 100px;
+  pointer-events: none;
+}
+
+.guestbook__actions {
+  display: flex;
+  gap: 10px;
+}
+
+.guestbook__actions .btn-primary {
+  flex: 1;
+}
+
+.wishes {
+  margin-top: 40px;
+  max-height: 420px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-right: 4px;
+}
+
+.wish {
+  padding: 12px 14px;
+  border: 1px solid var(--wine-soft);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.55);
+}
+
+.wish__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  align-items: baseline;
+}
+
+.wish__name {
+  font-weight: 700;
+  font-size: 16px;
+}
+
+.wish__time {
+  font-family: var(--font-ui);
+  font-size: 11px;
+  color: rgba(81, 20, 25, 0.55);
+}
+
+.wish p {
+  margin: 4px 0 0;
+  font-size: 16px;
+}
+
+/* ================= Hộp quà ================= */
+.gift {
+  text-align: center;
+}
+
+.gift__box {
+  position: relative;
+  width: 250px;
+  height: 300px;
+  border: 0;
+  background: none;
+  color: var(--wine);
+}
+
+.gift__sparkle {
+  position: absolute;
+  color: var(--gold-2);
+  animation: twinkle 2s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+  50% {
+    opacity: 0.25;
+    transform: scale(0.7);
+  }
+}
+
+.gift__envelopes {
+  position: relative;
+  display: block;
+  width: 200px;
+  height: 200px;
+  margin: 30px auto 0;
+}
+
+.red-envelope {
+  position: absolute;
+  top: 0;
+  width: 110px;
+  height: 170px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: linear-gradient(160deg, #a3232f, #7a1520 60%, #5c1018);
+  box-shadow: 0 14px 26px rgba(81, 20, 25, 0.35);
+}
+
+.red-envelope__flap {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 46px;
+  background: #8e1c27;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+}
+
+.red-envelope__flower {
+  position: absolute;
+  left: 8px;
+  right: 8px;
+  bottom: 6px;
+}
+
+.red-envelope__seal {
+  position: absolute;
+  left: 50%;
+  top: 34px;
+  width: 26px;
+  height: 26px;
+  margin-left: -13px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--gold);
+  color: #7a1520;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.gift__envelope--back {
+  left: 10px;
+  rotate: -12deg;
+  filter: brightness(0.9);
+}
+
+.gift__envelope--front {
+  left: 80px;
+  top: 12px;
+  rotate: 10deg;
+}
+
+.gift__box:hover .gift__envelope--front {
+  rotate: 4deg;
+}
+
+.gift__hint {
+  display: block;
+  margin-top: 18px;
+  font-size: 16px;
+  font-style: italic;
+}
+
+.gift__accounts {
+  display: grid;
+  gap: 24px;
+}
+
+.gift-account {
+  text-align: center;
+}
+
+.gift-account h3 {
+  margin: 0 0 10px;
+  font-size: 17px;
+}
+
+.gift-account__qr {
+  width: 200px;
+  margin: 0 auto 10px;
+  padding: 8px;
+  border: 2px solid rgba(81, 20, 25, 0.125);
+  border-radius: 10px;
+  background: #fff;
+}
+
+.gift-account p {
+  margin: 2px 0;
+}
+
+.gift-account__bank {
+  font-weight: 700;
+}
+
+.gift-account__number {
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+}
+
+.gift-account .btn-soft {
+  margin-top: 8px;
+}
+
+/* ================= Footer & nhạc ================= */
+.footer {
+  padding: 24px 24px 60px;
+  text-align: center;
+  font-family: var(--font-head);
+  font-size: 16px;
+  font-style: italic;
+}
+
+.music-btn {
+  position: fixed;
+  right: 16px;
+  bottom: 20px;
+  z-index: 400;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+}
+
+.music-btn__disc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, var(--cream) 0 4px, transparent 5px),
+    repeating-radial-gradient(circle, rgba(255, 255, 255, 0.08) 0 2px, transparent 2px 5px),
+    linear-gradient(135deg, rgba(81, 20, 25, 0.8), var(--wine), rgba(81, 20, 25, 0.87));
+  box-shadow: 0 6px 16px rgba(81, 20, 25, 0.4);
+}
+
+.music-btn.is-playing .music-btn__disc {
+  animation: spin 4s linear infinite;
+}
+
+.music-btn__bars {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  height: 16px;
+  padding: 2px 4px;
+  border-radius: 6px;
+  background: var(--cream);
+}
+
+.music-btn__bars span {
+  width: 2px;
+  background: var(--wine);
+}
+
+.music-btn.is-playing .music-btn__bars span {
+  animation: bars 0.8s ease-in-out infinite alternate;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes bars {
+  to {
+    height: 20%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .float-anim,
+  .hearts span,
+  .gift__sparkle,
+  .calendar__day svg,
+  .music-btn__disc {
+    animation: none !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}

@@ -1,0 +1,639 @@
+.admin,
+.login {
+  --a-bg: #f6f2ee;
+  --a-card: #fff;
+  --a-border: #e6ddd5;
+  --a-text: #2b1a1b;
+  --a-muted: #7a6a6b;
+  min-height: 100vh;
+  background: var(--a-bg);
+  color: var(--a-text);
+  font-family: var(--font-ui);
+  font-size: 14px;
+}
+
+/* ---------- Đăng nhập ---------- */
+.login {
+  display: grid;
+  place-items: center;
+  padding: 16px;
+}
+
+.login__card {
+  width: min(360px, 100%);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--a-card);
+  border-radius: 16px;
+  box-shadow: 0 12px 40px rgba(81, 20, 25, 0.12);
+  border-top: 4px solid var(--wine);
+}
+
+.login__card h1 {
+  margin: 0;
+  color: var(--wine);
+  font-size: 22px;
+}
+
+.login__card p {
+  margin: 0 0 6px;
+  color: var(--a-muted);
+}
+
+/* ---------- Khung ---------- */
+.admin__topbar {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  padding: 10px 20px;
+  background: var(--wine);
+  color: #fff;
+}
+
+.admin__brand {
+  font-size: 16px;
+}
+
+.admin__tabs {
+  display: flex;
+  gap: 4px;
+  flex: 1;
+  overflow-x: auto;
+}
+
+.admin__tabs a {
+  padding: 8px 14px;
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.75);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.admin__tabs a:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.admin__tabs a.is-active {
+  background: rgba(255, 255, 255, 0.16);
+  color: #fff;
+  font-weight: 600;
+}
+
+.admin__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.admin__actions .a-btn--ghost {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+.admin__content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 24px 16px 60px;
+}
+
+/* ---------- Panel ---------- */
+.panel__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.panel__head h2 {
+  margin: 0;
+  font-size: 22px;
+  color: var(--wine);
+}
+
+.panel__buttons {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+/* ---------- Nút ---------- */
+.a-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 14px;
+  border: 1px solid var(--a-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--a-text);
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.a-btn:hover:not(:disabled) {
+  background: #faf6f2;
+}
+
+.a-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.a-btn--primary {
+  border-color: var(--wine);
+  background: var(--wine);
+  color: #fff;
+}
+
+.a-btn--primary:hover:not(:disabled) {
+  background: #6a1d24;
+}
+
+.a-btn--ghost {
+  background: transparent;
+}
+
+.a-btn--ghost:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.a-btn--danger {
+  color: #b3261e;
+  border-color: #f0c9c6;
+}
+
+.a-btn--sm {
+  padding: 4px 10px;
+  font-size: 13px;
+}
+
+.admin-error {
+  color: #b3261e;
+}
+
+.saved-note {
+  color: #1e7b45;
+  font-weight: 600;
+}
+
+/* ---------- Input chung ---------- */
+.admin input,
+.admin select,
+.admin textarea,
+.login input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--a-border);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--a-text);
+  font-size: 14px;
+}
+
+.admin input:focus,
+.admin select:focus,
+.admin textarea:focus,
+.login input:focus {
+  outline: 2px solid rgba(81, 20, 25, 0.25);
+  border-color: var(--wine);
+}
+
+/* ---------- Thống kê ---------- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.stat {
+  padding: 14px 16px;
+  background: var(--a-card);
+  border: 1px solid var(--a-border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat__value {
+  font-size: 26px;
+  font-weight: 700;
+}
+
+.stat__label {
+  color: var(--a-muted);
+}
+
+.stat--wine .stat__value {
+  color: var(--wine);
+}
+
+.stat--green .stat__value {
+  color: #1e7b45;
+}
+
+.stat--grey .stat__value {
+  color: var(--a-muted);
+}
+
+/* ---------- Form thẻ ---------- */
+.card-form {
+  margin-bottom: 18px;
+  padding: 18px;
+  background: var(--a-card);
+  border: 1px solid var(--a-border);
+  border-left: 4px solid var(--wine);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  animation: popIn 0.2s ease;
+}
+
+.card-form h3 {
+  margin: 0;
+  color: var(--wine);
+}
+
+.card-form__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.card-form__grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-weight: 500;
+}
+
+.span-2 {
+  grid-column: span 2;
+}
+
+.span-3 {
+  grid-column: span 3;
+}
+
+.card-form__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.hint {
+  margin: 0;
+  color: var(--a-muted);
+}
+
+.hint code,
+.link-cell code {
+  padding: 1px 6px;
+  border-radius: 4px;
+  background: #f3ece6;
+  font-size: 12px;
+}
+
+.invite-preview {
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--paper);
+  color: var(--wine);
+}
+
+.invite-preview span {
+  font-style: italic;
+}
+
+.invite-preview strong {
+  font-family: var(--font-hand);
+  font-size: 24px;
+  font-weight: 400;
+}
+
+/* ---------- Bộ lọc ---------- */
+.filters {
+  display: grid;
+  grid-template-columns: 1fr 160px 180px;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+/* ---------- Bảng ---------- */
+.table-wrap {
+  overflow-x: auto;
+  background: var(--a-card);
+  border: 1px solid var(--a-border);
+  border-radius: 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th,
+.table td {
+  padding: 10px 14px;
+  text-align: left;
+  border-bottom: 1px solid #f1ebe5;
+  vertical-align: middle;
+}
+
+.table th {
+  background: #faf6f2;
+  color: var(--a-muted);
+  font-weight: 600;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.table tbody tr:hover {
+  background: #fdfaf7;
+}
+
+.table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.table__empty {
+  padding: 32px !important;
+  text-align: center !important;
+  color: var(--a-muted);
+}
+
+.table__msg {
+  max-width: 280px;
+  color: var(--a-muted);
+}
+
+.table__time {
+  white-space: nowrap;
+  color: var(--a-muted);
+  font-size: 13px;
+}
+
+.guest-name {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+}
+
+.guest-name__salutation {
+  color: var(--a-muted);
+}
+
+.guest-sub {
+  margin-top: 2px;
+  color: var(--a-muted);
+  font-size: 12px;
+}
+
+.link-cell {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.row-actions {
+  white-space: nowrap;
+  text-align: right !important;
+}
+
+.row-actions .a-btn + .a-btn {
+  margin-left: 6px;
+}
+
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 99px;
+  font-size: 12px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.badge--green {
+  background: #e3f4ea;
+  color: #1e7b45;
+}
+
+.badge--red {
+  background: #fbe7e5;
+  color: #b3261e;
+}
+
+.badge--grey {
+  background: #efebe8;
+  color: var(--a-muted);
+}
+
+.badge--blue {
+  background: #e6eefb;
+  color: #2456a6;
+}
+
+.badge--pink {
+  background: #fbe8ef;
+  color: #a62458;
+}
+
+.badge--soft {
+  margin-left: 6px;
+  background: #f6ecec;
+  color: var(--wine);
+  font-weight: 500;
+}
+
+/* ---------- Lời chúc ---------- */
+.wish-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.wish-card {
+  padding: 14px;
+  background: var(--a-card);
+  border: 1px solid var(--a-border);
+  border-radius: 12px;
+}
+
+.wish-card.is-hidden {
+  opacity: 0.5;
+  border-style: dashed;
+}
+
+.wish-card__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.wish-card__head span {
+  color: var(--a-muted);
+  font-size: 12px;
+}
+
+.wish-card__actions {
+  display: flex;
+  gap: 6px;
+}
+
+/* ---------- Cài đặt ---------- */
+.settings__head {
+  position: sticky;
+  top: 58px;
+  z-index: 5;
+  padding: 10px 0;
+  background: var(--a-bg);
+}
+
+.settings-section {
+  margin: 0 0 16px;
+  padding: 16px 18px 18px;
+  background: var(--a-card);
+  border: 1px solid var(--a-border);
+  border-radius: 12px;
+}
+
+.settings-section legend {
+  padding: 0 6px;
+  color: var(--wine);
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.settings-section__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.field span,
+.field-label {
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.field--wide {
+  grid-column: 1 / -1;
+}
+
+.gallery-editor {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.gallery-editor__item {
+  position: relative;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #eee;
+}
+
+.gallery-editor__item img {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+}
+
+.gallery-editor__tools {
+  position: absolute;
+  inset: auto 0 0;
+  display: flex;
+  justify-content: space-between;
+  padding: 4px;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.6));
+}
+
+.gallery-editor__tools button {
+  border: 0;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 2px 8px;
+}
+
+.inline-add {
+  display: flex;
+  gap: 8px;
+}
+
+.list-editor {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.list-editor__row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 130px 1fr auto;
+  gap: 8px;
+}
+
+.gift-editor {
+  width: 100%;
+  display: flex;
+  gap: 14px;
+  padding: 12px;
+  border: 1px dashed var(--a-border);
+  border-radius: 10px;
+}
+
+.gift-editor__fields {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.gift-editor__qr {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+@media (max-width: 720px) {
+  .card-form__grid,
+  .settings-section__grid,
+  .gift-editor__fields,
+  .filters {
+    grid-template-columns: 1fr;
+  }
+
+  .span-2,
+  .span-3 {
+    grid-column: auto;
+  }
+
+  .gift-editor {
+    flex-direction: column;
+  }
+
+  .settings__head {
+    top: 100px;
+  }
+}
