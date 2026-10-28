@@ -125,14 +125,20 @@ export default function SettingsForm() {
 
         <Section
           title={`4. Tiệc cưới ${sideLabel} & Google Map`}
-          hint="Mục THÔNG TIN TIỆC CƯỚI và lịch tháng. Bản đồ Google Map và nút Chỉ đường tự lấy theo Tên nhà hàng + Địa chỉ bên dưới — chỉ cần gõ đúng địa chỉ."
+          hint="Mục THÔNG TIN TIỆC CƯỚI và lịch tháng. Bản đồ và nút Chỉ đường dùng đúng vị trí trong Link Google Maps; để trống thì tự tìm theo Tên nhà hàng + Địa chỉ."
         >
           <Field label="Ngày" type="date" {...bind(`${ev}.reception.date`)} />
           <Field label="Giờ khai tiệc" type="time" {...bind(`${ev}.reception.time`)} />
           <Field label="Giờ đón khách" type="time" {...bind(`${ev}.reception.welcomeTime`)} />
           <Field label="Ngày âm lịch" {...bind(`${ev}.reception.lunarText`)} wide />
           <Field label="Tên nhà hàng / trung tâm" {...bind(`${ev}.reception.venueName`)} wide />
-          <Field label="Địa chỉ (dùng cho Google Map)" {...bind(`${ev}.reception.address`)} wide />
+          <Field label="Địa chỉ" {...bind(`${ev}.reception.address`)} wide />
+          <Field
+            label="Link Google Maps (không bắt buộc)"
+            placeholder="Dán link chỉ đường hoặc link địa điểm từ Google Maps"
+            {...bind(`${ev}.reception.mapsUrl`)}
+            wide
+          />
         </Section>
 
         <Section title={`5. Lịch trình ${sideLabel}`} hint="Mục LỊCH TRÌNH NGÀY CƯỚI: mỗi dòng gồm giờ và tên hoạt động.">
