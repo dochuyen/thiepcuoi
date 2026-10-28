@@ -2,11 +2,13 @@ import { useState } from 'react';
 import FlowerBouquet from '../common/FlowerBouquet.jsx';
 import FloatingHearts from '../common/FloatingHearts.jsx';
 import { parseDate } from '../../utils/date.js';
+import { coupleOrder } from '../../utils/couple.js';
 
 /** Màn hình mở thiệp: tên cô dâu chú rể, ngày cưới, "Thân Mời" + tên khách, nút Mở thiệp (bật nhạc) */
 export default function EnvelopeIntro({ config, guest, onOpen }) {
   const [closing, setClosing] = useState(false);
   const d = parseDate(config.reception.date);
+  const [first, second] = coupleOrder(config);
 
   const open = () => {
     setClosing(true);
@@ -24,9 +26,9 @@ export default function EnvelopeIntro({ config, guest, onOpen }) {
           ♥
         </div>
         <p className="intro__names">
-          {config.groom.shortName}
+          {first.person.shortName}
           <span>&amp;</span>
-          {config.bride.shortName}
+          {second.person.shortName}
         </p>
         <div className="intro__divider" aria-hidden="true">
           <span>❦</span>

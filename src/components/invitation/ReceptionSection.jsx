@@ -3,7 +3,7 @@ import DarkSection from './DarkSection.jsx';
 import DateBlock from './DateBlock.jsx';
 import MiniCalendar from './MiniCalendar.jsx';
 import RsvpModal from './RsvpModal.jsx';
-import { googleCalendarUrl } from '../../utils/date.js';
+import { formatTime, googleCalendarUrl } from '../../utils/date.js';
 
 /** THÔNG TIN TIỆC CƯỚI: giờ đón khách, lịch tháng, thêm vào lịch, nút xác nhận tham dự */
 export default function ReceptionSection({ config, guest }) {
@@ -13,7 +13,7 @@ export default function ReceptionSection({ config, guest }) {
   const calendarUrl = googleCalendarUrl({
     title: `Đám cưới ${groom.fullName} & ${bride.fullName}`,
     date: reception.date,
-    time: reception.welcomeTime || reception.time,
+    time: formatTime(reception.welcomeTime || reception.time),
     location: `${reception.venueName}, ${reception.address}`,
   });
 
@@ -25,11 +25,11 @@ export default function ReceptionSection({ config, guest }) {
       <div className="reception__times">
         <div>
           <span>Đón khách</span>
-          <strong>{reception.welcomeTime}</strong>
+          <strong>{formatTime(reception.welcomeTime)}</strong>
         </div>
         <div>
           <span>Khai tiệc</span>
-          <strong>{reception.time}</strong>
+          <strong>{formatTime(reception.time)}</strong>
         </div>
       </div>
 
@@ -42,7 +42,7 @@ export default function ReceptionSection({ config, guest }) {
         XÁC NHẬN THAM DỰ
       </button>
 
-      <RsvpModal open={rsvpOpen} onClose={() => setRsvpOpen(false)} guest={guest} />
+      <RsvpModal open={rsvpOpen} onClose={() => setRsvpOpen(false)} guest={guest} side={config.side} />
     </DarkSection>
   );
 }

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import Reveal from '../common/Reveal.jsx';
+import CastleBackdrop from '../common/CastleBackdrop.jsx';
 import Lightbox from './Lightbox.jsx';
 
 /** Vị trí 3D của ảnh theo khoảng cách tới ảnh đang xem (giống carousel của mẫu) */
@@ -29,8 +30,9 @@ export default function PhotoAlbum({ photos }) {
 
   return (
     <section className="light-section album">
+      <CastleBackdrop top="-6%" width="150%" />
       <Reveal>
-        <h2 className="section-title">Album Ảnh</h2>
+        {/* <h2 className="section-title">Album Ảnh</h2> */}
         <div className="album__stage">
           <button type="button" className="album__nav album__nav--prev" onClick={() => go(-1)} aria-label="Ảnh trước">
             ‹

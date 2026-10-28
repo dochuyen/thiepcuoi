@@ -1,66 +1,81 @@
-# Thiệp cưới Minimalism – Đỏ đậm (ReactJS)
+# Thiệp cưới Minimalism – Đỏ đậm (React + Firebase)
 
-Thiệp cưới online một trang (React + Vite), có trang **Admin** để quản lý khách mời. Mỗi khách có **link mời riêng**, khi mở link thì thiệp hiển thị tên khách đó.
+Thiệp cưới online một trang (React + Vite), dữ liệu lưu trên **Firebase** gói miễn phí Spark (Hosting + Firestore + Authentication). Có trang **Admin** để quản lý khách mời. Mỗi khách có **link mời riêng**, mở link thì thiệp hiện tên khách đó.
 
-## Chạy thử
+Có **2 thiệp cùng giao diện**: nhà trai và nhà gái (khác lễ, tiệc, bản đồ, lịch trình).
 
+| Đường dẫn | Nội dung |
+|---|---|
+| `/moi/<ten-khach>` | Link mời riêng, tự mở thiệp đúng nhà của khách |
+| `/nha-trai`, `/nha-gai` | Link chung không kèm tên (`/` = nhà trai) |
+| `/admin` | Trang quản lý |
+
+## Deploy lên Firebase (miễn phí)
+
+### 1. Tạo project Firebase (làm 1 lần trên web)
+1. Vào https://console.firebase.google.com → **Add project** → đặt tên (vd `thiep-cuoi-chuyen-yen`). Tắt Google Analytics cho gọn.
+2. **Build → Firestore Database → Create database** → chọn vùng `asia-southeast1 (Singapore)` → **Start in production mode**.
+3. **Build → Authentication → Get started → Email/Password → Enable**.
+   Sang tab **Users → Add user**: nhập email + mật khẩu admin của bạn.
+4. **Project settings** (bánh răng) → **General** → mục *Your apps* bấm biểu tượng **`</>`** (Web) → đặt tên → **Register app**. Copy các giá trị trong `firebaseConfig`.
+
+### 2. Cấu hình trong code
+1. Copy `.env.example` thành `.env`, điền 4 giá trị vừa copy (`apiKey`, `authDomain`, `projectId`, `appId`).
+2. Mở `firestore.rules`, thay `admin@example.com` bằng **email admin vừa tạo** (viết chữ thường).
+
+### 3. Deploy
 ```bash
 npm install
-npm run dev          # API :3001 + React :5173
+npx firebase login
+npx firebase use --add          # chọn project vừa tạo, alias gõ: default
+npm run deploy
 ```
+Xong sẽ có link `https://<project-id>.web.app`.
 
-- Thiệp: http://localhost:5173
-- Admin: http://localhost:5173/admin (mật khẩu mặc định: `admin123`)
+### 4. Đưa dữ liệu cũ lên (nếu có `data/db.json`)
+Vào `https://<project-id>.web.app/admin` → đăng nhập → **Cài đặt thiệp → 9. Chuyển dữ liệu cũ lên Firebase** → chọn file `data/db.json`.
 
-Chạy production:
+Lần sau sửa code chỉ cần chạy lại `npm run deploy`. Sửa nội dung thiệp, khách mời thì làm trong trang admin, không cần deploy.
+
+## Chạy trên máy
 
 ```bash
-npm run build
-ADMIN_PASSWORD=matkhaucuaban PORT=3000 npm start   # phục vụ cả web + API
+npm run dev       # dùng dữ liệu Firebase thật (cần file .env)
+npm run dev:emu   # dùng Firebase Emulator trên máy, không đụng dữ liệu thật (cần Java)
 ```
 
-## Tính năng
-
-**Thiệp** (`/` hoặc `/moi/<slug-khach>`)
-- Màn hình mở thiệp: "Kính gửi <tên khách>", bấm vào để mở thiệp và bật nhạc
-- Save The Date, phong bì có ảnh, tên cô dâu chú rể, lời mời theo tên khách
-- Thông tin lễ cưới (bố mẹ hai bên, ngày dương/âm)
-- Album ảnh xoay 3D, tự chạy, bấm vào để xem toàn màn hình (vuốt để chuyển ảnh)
-- Thông tin tiệc cưới, lịch tháng có tim ở ngày cưới, nút thêm vào Google Calendar
-- Xác nhận tham dự (RSVP), tự gắn với khách khi mở từ link mời riêng
-- Bản đồ Google Maps và nút chỉ đường, dress code, lịch trình ngày cưới
-- Sổ lưu bút, có nút 🪄 gợi ý lời chúc
-- Hộp quà mừng với QR chuyển khoản (tạo tự động qua VietQR)
-- Nhạc nền
-
-**Admin** (`/admin`)
-- **Khách mời**: thêm từng người hoặc thêm nhiều người (mỗi dòng `Anh | Nguyễn Văn A`), sửa, xoá, tìm kiếm, lọc; copy link mời; xem ai đã mở thiệp và ai đã phản hồi; xuất CSV
-- **Xác nhận tham dự**: thống kê số người, xuất CSV
-- **Lời chúc**: ẩn hoặc xoá lời chúc
-- **Cài đặt thiệp**: sửa tên, ngày giờ, địa điểm, ảnh, lịch trình, tài khoản ngân hàng, nhạc
+Với `dev:emu`, tạo tài khoản admin thử trong emulator rồi đăng nhập bằng email trùng với email trong `firestore.rules`.
 
 ## Cấu trúc
 
 ```
-server/
-  index.js          API Express (public + admin)
-  db.js             lưu dữ liệu vào data/db.json
-  defaultData.js    nội dung thiệp mặc định
+firebase.json       cấu hình Hosting + Firestore + Emulator
+firestore.rules     quyền truy cập dữ liệu (danh sách email admin nằm ở đây)
 src/
+  firebase.js       khởi tạo Firebase từ biến môi trường VITE_FIREBASE_*
+  api.js            đọc / ghi Firestore cho trang thiệp và admin
+  defaultConfig.js  nội dung thiệp mặc định, tách thiệp nhà trai / nhà gái
   pages/            InvitationPage, AdminPage
   components/
-    common/         Modal, Reveal (hiệu ứng cuộn), hoa trang trí
+    common/         Modal, Reveal, hoa trang trí, lâu đài nền
     invitation/     từng phần của thiệp (Hero, CeremonySection, PhotoAlbum, ...)
     admin/          AdminLayout, LoginForm, RsvpList, WishList
-      guests/       GuestManager, GuestForm, BulkAddGuests, GuestTable, GuestRow, GuestFilters
-      settings/     SettingsForm và các editor con
-  hooks/            useAsync, useReveal
-  utils/            date, csv, vietqr, inviteLink
-  styles/           global.css, invitation.css, admin.css
+      guests/       quản lý khách mời
+      settings/     SettingsForm, LegacyImport và các editor con
+  assets/           ảnh trang trí, nhạc nền
 ```
 
+## Dữ liệu trên Firestore
+
+| Collection | Nội dung | Ai đọc / ghi |
+|---|---|---|
+| `config/main` | Cài đặt thiệp | Ai cũng đọc, admin ghi |
+| `guests` | Khách mời đầy đủ (SĐT, ghi chú) | Chỉ admin |
+| `invites/{slug}` | Tên, xưng hô, bên của link mời riêng | Khách đọc đúng link của mình |
+| `rsvps` | Xác nhận tham dự | Khách gửi, admin xem |
+| `wishes` | Lời chúc | Khách gửi và đọc lời chúc không bị ẩn, admin ẩn / xoá |
+
 ## Lưu ý
-- Ảnh mặc định là ảnh mẫu từ picsum.photos. Bạn thay bằng ảnh của mình trong Admin → Cài đặt thiệp.
-- Hoa, phong bì, hộp quà đều vẽ bằng CSS/SVG, không dùng ảnh của mẫu gốc (ảnh đó có bản quyền).
+- Gói Spark miễn phí: 50.000 lượt đọc + 20.000 lượt ghi Firestore mỗi ngày, 10GB Hosting. Thiệp vài trăm khách dùng không hết.
 - Mã ngân hàng cho QR: VCB, TCB, MB, ACB, BIDV, ICB (VietinBank), VPB, TPB...
-- Đổi `ADMIN_PASSWORD` khi deploy thật.
+- Ảnh cưới nhập bằng link ảnh (Google Photos, Imgur...).

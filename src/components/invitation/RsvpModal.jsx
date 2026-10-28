@@ -3,12 +3,12 @@ import Modal from '../common/Modal.jsx';
 import { api } from '../../api.js';
 
 /** Form xác nhận tham dự; nếu mở từ link mời riêng thì tự điền tên và gắn với khách đó */
-export default function RsvpModal({ open, onClose, guest }) {
+export default function RsvpModal({ open, onClose, guest, side = 'groom' }) {
   const [form, setForm] = useState({
     name: guest?.name ?? '',
     attending: true,
     guestCount: 1,
-    side: 'groom',
+    side,
     message: '',
   });
   const [status, setStatus] = useState('idle'); // idle | sending | done | error

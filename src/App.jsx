@@ -6,6 +6,8 @@ export default function App() {
   return (
     <Routes>
       <Route path="/" element={<InvitationPage />} />
+      <Route path="/nha-trai" element={<InvitationPage side="groom" />} />
+      <Route path="/nha-gai" element={<InvitationPage side="bride" />} />
       <Route path="/moi/:slug" element={<InvitationPage />} />
       <Route path="/admin/*" element={<AdminPage />} />
     </Routes>

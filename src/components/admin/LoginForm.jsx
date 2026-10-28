@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { adminApi, setToken } from '../../api.js';
+import { adminApi } from '../../api.js';
 
-export default function LoginForm({ onSuccess }) {
+/** Đăng nhập bằng tài khoản Firebase Auth có email nằm trong danh sách admin của firestore.rules */
+export default function LoginForm() {
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
@@ -11,12 +13,10 @@ export default function LoginForm({ onSuccess }) {
     setLoading(true);
     setError('');
     try {
-      const { token } = await adminApi.login(password);
-      setToken(token);
-      onSuccess();
+      // AdminPage tự chuyển sang trang quản lý khi trạng thái đăng nhập đổi
+      await adminApi.login(email, password);
     } catch (err) {
       setError(err.message);
-    } finally {
       setLoading(false);
     }
   };
@@ -25,13 +25,22 @@ export default function LoginForm({ onSuccess }) {
     <div className="login">
       <form className="login__card" onSubmit={submit}>
         <h1>Quản lý thiệp cưới</h1>
-        <p>Nhập mật khẩu quản trị để tiếp tục</p>
+        <p>Đăng nhập bằng tài khoản quản trị</p>
+        <input
+          type="email"
+          placeholder="Email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          autoComplete="username"
+          autoFocus
+          required
+        />
         <input
           type="password"
+          autoComplete="current-password"
           placeholder="Mật khẩu"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          autoFocus
           required
         />
         {error && <div className="admin-error">{error}</div>}

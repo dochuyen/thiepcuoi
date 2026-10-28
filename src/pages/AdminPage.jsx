@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { getToken, setToken } from '../api.js';
+import { adminApi, watchAdmin } from '../api.js';
 import LoginForm from '../components/admin/LoginForm.jsx';
 import AdminLayout from '../components/admin/AdminLayout.jsx';
 import GuestManager from '../components/admin/guests/GuestManager.jsx';
@@ -10,21 +10,14 @@ import SettingsForm from '../components/admin/settings/SettingsForm.jsx';
 import '../styles/admin.css';
 
 export default function AdminPage() {
-  const [loggedIn, setLoggedIn] = useState(Boolean(getToken()));
+  // null = đang kiểm tra phiên đăng nhập Firebase
+  const [loggedIn, setLoggedIn] = useState(null);
+  useEffect(() => watchAdmin(setLoggedIn), []);
 
-  // api.js phát sự kiện này khi token hết hạn (server khởi động lại)
-  useEffect(() => {
-    const onLogout = () => setLoggedIn(false);
-    window.addEventListener('admin-logout', onLogout);
-    return () => window.removeEventListener('admin-logout', onLogout);
-  }, []);
+  if (loggedIn === null) return <p className="login">Đang tải...</p>;
+  if (!loggedIn) return <LoginForm />;
 
-  if (!loggedIn) return <LoginForm onSuccess={() => setLoggedIn(true)} />;
-
-  const logout = () => {
-    setToken(null);
-    setLoggedIn(false);
-  };
+  const logout = () => adminApi.logout();
 
   return (
     <AdminLayout onLogout={logout}>

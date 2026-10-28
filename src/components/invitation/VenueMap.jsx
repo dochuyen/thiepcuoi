@@ -1,4 +1,5 @@
 import Reveal from '../common/Reveal.jsx';
+import CastleBackdrop from '../common/CastleBackdrop.jsx';
 
 /** Địa điểm tổ chức + Google Maps nhúng + nút chỉ đường */
 export default function VenueMap({ reception }) {
@@ -6,6 +7,7 @@ export default function VenueMap({ reception }) {
   const q = encodeURIComponent(full);
   return (
     <section className="light-section venue">
+      <CastleBackdrop top="-1%" width="158%" />
       <Reveal>
         <h3 className="section-title">Tiệc cưới sẽ tổ chức tại</h3>
         <p className="venue__address">{full}</p>

@@ -8,29 +8,31 @@ import CeremonySection from '../components/invitation/CeremonySection.jsx';
 import PhotoAlbum from '../components/invitation/PhotoAlbum.jsx';
 import ReceptionSection from '../components/invitation/ReceptionSection.jsx';
 import VenueMap from '../components/invitation/VenueMap.jsx';
-import DressCode from '../components/invitation/DressCode.jsx';
 import ScheduleSection from '../components/invitation/ScheduleSection.jsx';
 import Guestbook from '../components/invitation/Guestbook.jsx';
 import GiftBox from '../components/invitation/GiftBox.jsx';
 import Footer from '../components/invitation/Footer.jsx';
 import MusicPlayer from '../components/invitation/MusicPlayer.jsx';
+import defaultMusic from '../assets/dam-cuoi-tren-duong-que.mp3';
 import '../styles/invitation.css';
 
-/** Trang thiệp: /moi/:slug hoặc /?to=slug sẽ hiển thị tên khách mời */
-export default function InvitationPage() {
+/**
+ * Trang thiệp. Có 2 thiệp cùng giao diện: nhà trai và nhà gái (khác lễ, tiệc, lịch trình).
+ * - /moi/:slug hoặc /?to=slug: hiện tên khách, thiệp theo bên của khách đó
+ * - /nha-trai, /nha-gai (và /): thiệp chung không kèm tên
+ */
+export default function InvitationPage({ side = 'groom' }) {
   const { slug: pathSlug } = useParams();
   const [params] = useSearchParams();
   const slug = pathSlug || params.get('to');
   const preview = params.has('preview');
 
   const { data, loading, error } = useAsync(async () => {
-    const [config, guest] = await Promise.all([
-      api.getConfig(),
-      slug ? api.getGuest(slug, preview).catch(() => null) : null,
-    ]);
+    const guest = slug ? await api.getGuest(slug, preview).catch(() => null) : null;
+    const config = await api.getConfig(guest?.side ?? side);
     document.title = `Thiệp cưới ${config.groom.shortName} & ${config.bride.shortName}`;
     return { config, guest };
-  }, [slug]);
+  }, [slug, side]);
 
   const [opened, setOpened] = useState(false);
   const music = useRef(null);
@@ -53,13 +55,13 @@ export default function InvitationPage() {
         <PhotoAlbum photos={config.gallery} />
         <ReceptionSection config={config} guest={guest} />
         <VenueMap reception={config.reception} />
-        <DressCode dressCode={config.dressCode} />
         <ScheduleSection schedule={config.schedule} />
         <Guestbook guest={guest} />
         <GiftBox gifts={config.gifts} />
         <Footer text={config.footerText} />
       </main>
-      <MusicPlayer ref={music} src={config.musicUrl} />
+      {/* chưa nhập link nhạc trong admin thì dùng bài mặc định */}
+      <MusicPlayer ref={music} src={config.musicUrl || defaultMusic} />
     </div>
   );
 }

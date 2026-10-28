@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // ĐỔI email dưới đây thành email tài khoản admin bạn tạo trong Firebase Console → Authentication.
+    // Viết email bằng chữ thường (Firebase lưu email dạng chữ thường).
+    // Nhiều admin: ['a@gmail.com', 'b@gmail.com']
+    function isAdmin() {
+      return request.auth != null
+        && request.auth.token.email in ['dovanchuyen27072002@gmail.com'];
+    }
+
+    function str(v, min, max) {
+      return v is string && v.size() >= min && v.size() <= max;
+    }
+
+    // Cấu hình thiệp: ai cũng đọc, chỉ admin sửa
+    match /config/{id} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Danh sách khách đầy đủ (SĐT, ghi chú): chỉ admin
+    match /guests/{id} {
+      allow read, write: if isAdmin();
+    }
+
+    // Link mời riêng: khách chỉ đọc đúng link của mình và đánh dấu "đã mở" 1 lần
+    match /invites/{slug} {
+      allow get: if true;
+      allow list, create, delete: if isAdmin();
+      allow update: if isAdmin()
+        || (resource.data.openedAt == null
+          && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['openedAt'])
+          && request.resource.data.openedAt == request.time);
+    }
+
+    // Xác nhận tham dự: khách gửi, admin xem / xoá
+    match /rsvps/{id} {
+      allow create: if request.resource.data.keys().hasOnly(
+          ['guestSlug', 'name', 'attending', 'guestCount', 'side', 'message', 'createdAt'])
+        && str(request.resource.data.name, 1, 120)
+        && request.resource.data.attending is bool
+        && request.resource.data.guestCount is int
+        && request.resource.data.guestCount >= 1 && request.resource.data.guestCount <= 20
+        && request.resource.data.side in ['groom', 'bride']
+        && str(request.resource.data.message, 0, 1000)
+        && (request.resource.data.guestSlug == null || str(request.resource.data.guestSlug, 1, 200))
+        && request.resource.data.createdAt == request.time;
+      allow read, update, delete: if isAdmin();
+      allow create: if isAdmin();
+    }
+
+    // Lời chúc: khách gửi và đọc lời chúc không bị ẩn, admin ẩn / xoá
+    match /wishes/{id} {
+      allow read: if resource.data.hidden == false || isAdmin();
+      allow create: if (request.resource.data.keys().hasOnly(['name', 'message', 'hidden', 'createdAt'])
+          && str(request.resource.data.name, 1, 120)
+          && str(request.resource.data.message, 1, 2000)
+          && request.resource.data.hidden == false
+          && request.resource.data.createdAt == request.time)
+        || isAdmin();
+      allow update, delete: if isAdmin();
+    }
+  }
+}

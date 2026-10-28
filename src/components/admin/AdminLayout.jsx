@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
 
+// Đường dẫn tuyệt đối: layout nằm trong route "/admin/*" nên link tương đối bị nối thêm vào URL hiện tại
 const TABS = [
-  { to: 'guests', label: 'Khách mời', icon: '👥' },
-  { to: 'rsvps', label: 'Xác nhận tham dự', icon: '✅' },
-  { to: 'wishes', label: 'Lời chúc', icon: '💌' },
-  { to: 'settings', label: 'Cài đặt thiệp', icon: '⚙️' },
+  { to: '/admin/guests', label: 'Khách mời', icon: '👥' },
+  { to: '/admin/rsvps', label: 'Xác nhận tham dự', icon: '✅' },
+  { to: '/admin/wishes', label: 'Lời chúc', icon: '💌' },
+  { to: '/admin/settings', label: 'Cài đặt thiệp', icon: '⚙️' },
 ];
 
 export default function AdminLayout({ onLogout, children }) {
@@ -20,8 +21,11 @@ export default function AdminLayout({ onLogout, children }) {
           ))}
         </nav>
         <div className="admin__actions">
-          <a href="/" target="_blank" rel="noreferrer" className="a-btn a-btn--ghost">
-            Xem thiệp ↗
+          <a href="/nha-trai" target="_blank" rel="noreferrer" className="a-btn a-btn--ghost">
+            Thiệp nhà trai ↗
+          </a>
+          <a href="/nha-gai" target="_blank" rel="noreferrer" className="a-btn a-btn--ghost">
+            Thiệp nhà gái ↗
           </a>
           <button type="button" className="a-btn a-btn--ghost" onClick={onLogout}>
             Đăng xuất

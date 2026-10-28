@@ -40,6 +40,15 @@ export function googleCalendarUrl({ title, date, time, hours = 4, location }) {
   return `https://www.google.com/calendar/render?${params}`;
 }
 
+/** Giờ hiển thị trên thiệp luôn dạng 24h: "2:00 PM" / "02:00 PM" / "14:00" -> "14:00" */
+export function formatTime(value) {
+  const m = String(value ?? '').trim().match(/^(\d{1,2}):(\d{2})\s*([AaPp][Mm])?$/);
+  if (!m) return value ?? '';
+  let h = Number(m[1]) % (m[3] ? 12 : 24);
+  if (/p/i.test(m[3] ?? '')) h += 12;
+  return `${String(h).padStart(2, '0')}:${m[2]}`;
+}
+
 export function formatDateTime(iso) {
   return new Date(iso).toLocaleString('vi-VN');
 }

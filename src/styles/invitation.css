@@ -11,14 +11,37 @@
   max-width: 480px;
   margin: 0 auto;
   overflow: hidden;
-  background-color: var(--paper);
-  /* vân giấy nhẹ thay cho ảnh paper.webp */
-  background-image:
-    radial-gradient(rgba(81, 20, 25, 0.035) 1px, transparent 1px),
-    radial-gradient(rgba(81, 20, 25, 0.025) 1px, transparent 1px);
-  background-size: 7px 7px, 11px 11px;
-  background-position: 0 0, 3px 5px;
+  isolation: isolate;
+  background-color: #fff7eb;
   box-shadow: 0 0 40px rgba(81, 20, 25, 0.12);
+}
+
+/* vân giấy phủ toàn trang */
+.invitation__paper::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  opacity: 0.5;
+  background: url('../assets/paper.webp') 50% 0 / 100% auto repeat;
+  pointer-events: none;
+}
+
+/* lâu đài mờ phía sau các phần nền sáng */
+.castle-backdrop {
+  position: absolute;
+  left: 50%;
+  z-index: -1;
+  max-width: none;
+  opacity: 0.1;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.hero,
+.light-section {
+  isolation: isolate;
+  overflow-x: clip;
 }
 
 .page-loading {
@@ -75,6 +98,7 @@
   font-weight: 700;
   font-size: 20px;
   letter-spacing: 0.03em;
+  text-transform: uppercase;
   color: var(--wine);
 }
 
@@ -150,22 +174,29 @@
   background: #f7f0e8;
   border-radius: 6px;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
   animation: popIn 0.6s ease;
 }
 
 .intro__flower {
   position: absolute;
-  top: 20px;
-  width: 92px;
+  top: 10px;
+  width: 96px;
+  opacity: 0.8;
   pointer-events: none;
 }
 
 .intro__flower--left {
-  left: -8px;
+  left: -26px;
 }
 
 .intro__flower--right {
-  right: -8px;
+  right: -26px;
+}
+
+/* nội dung thiệp nằm trên hoa */
+.intro__card > :not(.intro__flower) {
+  position: relative;
 }
 
 .intro__heart {
@@ -185,7 +216,7 @@
 .intro__names {
   margin: 0;
   font-family: var(--font-script);
-  font-size: 32px;
+  font-size: 30px;
   line-height: 1.15;
 }
 
@@ -215,14 +246,16 @@
 
 .intro__date {
   margin: 0;
+  font-family: var(--font-intro);
   font-size: 18px;
-  color: rgba(81, 20, 25, 0.8);
+  color: rgba(81, 20, 25, 0.72);
 }
 
 .intro__invite {
   margin: 18px 0 0;
+  font-family: var(--font-intro);
   font-size: 18px;
-  color: rgba(81, 20, 25, 0.8);
+  color: rgba(81, 20, 25, 0.72);
 }
 
 .intro__guest {
@@ -240,10 +273,10 @@
   border: 0;
   border-radius: 999px;
   background: var(--wine);
-  color: #fff;
-  font-family: var(--font-serif);
+  color: #f3e8de;
+  font-family: var(--font-intro);
   font-size: 18px;
-  font-weight: 700;
+  font-weight: 600;
   box-shadow: 0 8px 18px rgba(81, 20, 25, 0.35);
   transition: transform 0.15s;
 }
@@ -261,47 +294,36 @@
 
 .hero__eyebrow {
   margin: 0 0 18px;
-  font-family: var(--font-serif);
+  font-family: var(--font-eyebrow);
   font-weight: 600;
-  font-size: 22px;
+  font-size: 15px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
   color: #590310;
 }
 
+/* ảnh phong bì 1013×1168, vai nắp ở ~39.5% chiều cao */
 .envelope {
   position: relative;
-  width: 280px;
-  height: 300px;
+  width: min(330px, 100%);
+  aspect-ratio: 1013 / 1168;
   margin: 0 auto;
 }
 
 .envelope__back {
   position: absolute;
-  inset: 90px 0 0;
-  border-radius: 6px;
-  background: linear-gradient(160deg, #6a1d24, var(--wine));
-  box-shadow: 0 18px 30px rgba(81, 20, 25, 0.3);
-}
-
-/* nắp phong bì phía sau */
-.envelope__back::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -70px;
-  height: 70px;
-  background: #5e1a20;
-  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  inset: 0;
+  background: url('../assets/envelope-background.webp') center / 100% 100% no-repeat;
+  filter: drop-shadow(0 18px 24px rgba(81, 20, 25, 0.3));
 }
 
 .envelope__photo {
   position: absolute;
   left: 50%;
-  top: 0;
-  width: 190px;
-  margin-left: -95px;
+  top: 6px;
+  rotate: 6deg;
+  width: 60%;
+  margin-left: -30%;
   padding: 8px 8px 26px;
   background: #fff;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
@@ -314,29 +336,32 @@
   object-fit: cover;
 }
 
+/* túi trước phong bì, cùng tông với ảnh nền (#4c1821) */
 .envelope__front {
   position: absolute;
-  inset: 150px 0 0;
+  inset: 40% 0 0;
   z-index: 2;
-  border-radius: 0 0 6px 6px;
-  background: linear-gradient(180deg, #6a1d24, #4a1015);
-  clip-path: polygon(0 0, 50% 45%, 100% 0, 100% 100%, 0 100%);
+  border-radius: 0 0 4px 4px;
+  background: linear-gradient(180deg, #5e1d27, #47141c);
+  clip-path: polygon(0 0, 50% 40%, 100% 0, 100% 100%, 0 100%);
+  filter: drop-shadow(0 -2px 3px rgba(0, 0, 0, 0.35));
 }
 
 .envelope__flower {
   position: absolute;
   z-index: 3;
-  left: -40px;
-  top: 40px;
-  width: 120px;
-  rotate: -12deg;
+  left: -2%;
+  top: -12%;
+  width: 42%;
+  rotate: -17deg;
+  filter: drop-shadow(3px 4px 3px rgba(0, 0, 0, 0.3));
 }
 
 .envelope__seal {
   position: absolute;
   z-index: 4;
   left: 50%;
-  top: 205px;
+  top: calc(40% + 0.4 * 60% - 23px);
   width: 46px;
   height: 46px;
   margin-left: -23px;
@@ -354,13 +379,29 @@
 .hero__names {
   margin-top: 26px;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
 }
 
 .hero__names p {
   margin: 0;
   font-family: var(--font-script);
-  font-size: 44px;
+  font-size: 46px;
   line-height: 1.15;
+}
+
+/* chữ & to, mờ, nằm sau hai tên */
+.hero__names span {
+  position: absolute;
+  left: 50%;
+  top: 37%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-hand);
+  font-size: 92px;
+  line-height: 1;
+  color: rgba(81, 20, 25, 0.15);
+  pointer-events: none;
 }
 
 /* Lời mời theo tên khách */
@@ -411,6 +452,18 @@
 }
 
 /* viền kép mảnh bên trong */
+/* vân giấy nhân lên nền đỏ */
+.dark-section__card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: url('../assets/paper.webp') center / cover;
+  mix-blend-mode: multiply;
+  opacity: 0.4;
+  pointer-events: none;
+}
+
 .dark-section__card::before {
   content: '';
   position: absolute;
@@ -430,8 +483,8 @@
   display: block;
 }
 
-.floating-flower svg,
-.envelope__flower svg {
+.floating-flower img,
+.envelope__flower img {
   display: block;
   width: 100%;
   height: auto;
@@ -460,7 +513,7 @@
   display: flex;
   flex-direction: column;
   gap: 2px;
-  font-size: 15px;
+  font-size: 13px;
 }
 
 .family__label {
@@ -471,9 +524,14 @@
   font-weight: 600;
 }
 
+.family__role {
+  font-weight: 400;
+  color: var(--cream-70);
+}
+
 .family__address {
   margin-top: 4px;
-  font-size: 13px;
+  font-size: 11px;
   color: var(--cream-70);
 }
 
@@ -498,17 +556,18 @@
 }
 
 .couple__title {
-  font-size: 13px;
+  font-family: var(--font-label);
+  font-size: 10px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--cream-70);
 }
 
 .couple__amp {
-  margin: 6px 0;
+  margin: 2px 0;
   font-family: var(--font-amp);
-  font-size: 42px;
-  line-height: 1;
+  font-size: 35px;
+  line-height: 1.5;
 }
 
 /* ================= Khối ngày ================= */
@@ -532,7 +591,7 @@
 }
 
 .date-block__day {
-  font-size: 58px;
+  font-size: 40px;
   line-height: 1;
 }
 
@@ -546,13 +605,14 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  font-size: 18px;
+  font-size: 15px;
   letter-spacing: 0.06em;
 }
 
 .date-block__lunar {
-  font-size: 14px;
-  font-style: italic;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
   color: var(--cream-70);
 }
 
@@ -716,8 +776,8 @@
 /* ================= Tiệc cưới ================= */
 .reception__heading {
   margin: 0 0 8px;
-  font-size: 16px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 400;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -740,8 +800,8 @@
 }
 
 .reception__times strong {
-  font-size: 22px;
-  font-weight: 600;
+  font-size: 18px;
+  font-weight: 500;
 }
 
 .calendar {
@@ -822,8 +882,8 @@
   padding: 12px 26px;
   border-radius: 999px;
   font-family: var(--font-serif);
-  font-weight: 700;
-  font-size: 15px;
+  font-weight: 600;
+  font-size: 14px;
   letter-spacing: 0.06em;
   text-decoration: none;
   transition:
@@ -986,21 +1046,6 @@
   margin-top: 14px;
 }
 
-/* ================= Dress code ================= */
-.dress-code__swatches {
-  display: flex;
-  justify-content: center;
-  gap: 14px;
-}
-
-.dress-code__swatches span {
-  width: 44px;
-  height: 44px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(81, 20, 25, 0.19);
-  box-shadow: 0 4px 10px rgba(81, 20, 25, 0.15);
-}
-
 /* ================= Timeline ================= */
 .timeline {
   list-style: none;
@@ -1020,7 +1065,8 @@
 .timeline__time {
   text-align: right;
   font-family: var(--font-head);
-  font-size: 20px;
+  font-size: 16px;
+  letter-spacing: 0.025em;
 }
 
 .timeline__label {
@@ -1077,28 +1123,25 @@
 }
 
 /* ================= Sổ lưu bút ================= */
-.guestbook {
-  background: linear-gradient(180deg, transparent, rgba(236, 228, 216, 0.5));
-}
-
 .guestbook__card {
   position: relative;
-  padding: 26px 22px 22px;
-  background: #fbf8f3;
-  border-radius: 6px;
-  box-shadow: 0 14px 34px rgba(81, 20, 25, 0.18);
+  isolation: isolate;
+  padding: 30px 24px 64px;
+}
+
+/* nền giấy + hoa góc dưới trái (ảnh 1513×1378). Cắt 9 mảnh để hoa không bị méo,
+   outset đẩy phần viền trong suốt của ảnh ra ngoài khung thẻ */
+.guestbook__card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border: 0 solid transparent;
+  border-image: url('../assets/papernote-background.webp') 300 260 440 580 fill / 84px 73px 123px 162px / 68px 54px 57px 60px;
 }
 
 .guestbook__card .section-title {
   margin-bottom: 6px;
-}
-
-.guestbook__flower {
-  position: absolute;
-  left: -36px;
-  bottom: -40px;
-  width: 100px;
-  pointer-events: none;
 }
 
 .guestbook__actions {
@@ -1206,9 +1249,10 @@
 
 .red-envelope__flower {
   position: absolute;
-  left: 8px;
-  right: 8px;
-  bottom: 6px;
+  left: 50%;
+  top: 52px;
+  width: 64px;
+  margin-left: -32px;
 }
 
 .red-envelope__seal {
@@ -1261,7 +1305,9 @@
 
 .gift-account h3 {
   margin: 0 0 10px;
-  font-size: 17px;
+  font-family: var(--font-sans);
+  font-weight: 500;
+  font-size: 14px;
 }
 
 .gift-account__qr {

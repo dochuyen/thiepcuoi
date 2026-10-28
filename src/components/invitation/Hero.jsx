@@ -1,10 +1,14 @@
 import FlowerBouquet from '../common/FlowerBouquet.jsx';
+import CastleBackdrop from '../common/CastleBackdrop.jsx';
 import GuestGreeting from './GuestGreeting.jsx';
+import { coupleOrder } from '../../utils/couple.js';
 
 /** Phần đầu: Save The Date + phong bì có ảnh cưới + tên cô dâu chú rể */
 export default function Hero({ config, guest }) {
+  const [first, second] = coupleOrder(config);
   return (
     <header className="hero">
+      <CastleBackdrop top="26%" width="170%" />
       <p className="hero__eyebrow">Save The Date</p>
 
       <div className="envelope">
@@ -22,8 +26,9 @@ export default function Hero({ config, guest }) {
       </div>
 
       <div className="hero__names">
-        <p>{config.groom.shortName}</p>
-        <p>{config.bride.shortName}</p>
+        <p>{first.person.shortName}</p>
+        <span>&amp;</span>
+        <p>{second.person.shortName}</p>
       </div>
 
       {guest && <GuestGreeting guest={guest} />}

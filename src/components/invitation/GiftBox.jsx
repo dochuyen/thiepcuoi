@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Modal from '../common/Modal.jsx';
 import Reveal from '../common/Reveal.jsx';
+import CastleBackdrop from '../common/CastleBackdrop.jsx';
 import GiftAccount from './GiftAccount.jsx';
 import RedEnvelope from './RedEnvelope.jsx';
 
@@ -18,6 +19,7 @@ export default function GiftBox({ gifts }) {
 
   return (
     <section className="light-section gift">
+      <CastleBackdrop top="6%" width="155%" />
       <Reveal>
         <h2 className="section-title">Hộp Quà Mừng</h2>
         <button type="button" className="gift__box" onClick={() => setOpen(true)} aria-label="Mở hộp mừng cưới">

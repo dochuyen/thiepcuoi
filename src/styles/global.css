@@ -11,7 +11,12 @@
   --font-script: 'Viaoda Libre', 'The Nautigal', cursive;
   --font-hand: 'The Nautigal', cursive;
   --font-amp: 'Ms Madi', cursive;
-  --font-serif: 'Cormorant Garamond', Baskerville, 'Times New Roman', serif;
+  /* chữ thường của mẫu: Baskerville (macOS/iOS), Windows/Android rơi về Times New Roman */
+  --font-serif: Baskerville, 'Times New Roman', serif;
+  --font-eyebrow: 'Cormorant Garamond', 'Times New Roman', serif;
+  --font-intro: 'Lora', Georgia, serif;
+  --font-label: 'Uchen', Baskerville, serif;
+  --font-sans: 'Montserrat', system-ui, sans-serif;
   --font-head: 'Times New Roman', serif;
   --font-ui: 'Be Vietnam Pro', system-ui, sans-serif;
 }

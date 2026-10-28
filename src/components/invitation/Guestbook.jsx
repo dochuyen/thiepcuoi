@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import Reveal from '../common/Reveal.jsx';
-import FlowerBouquet from '../common/FlowerBouquet.jsx';
 import { api } from '../../api.js';
 import { useAsync } from '../../hooks/useAsync.js';
 import { formatDateTime } from '../../utils/date.js';
@@ -39,7 +38,6 @@ export default function Guestbook({ guest }) {
     <section className="light-section guestbook">
       <Reveal>
         <form className="form guestbook__card" onSubmit={submit}>
-          <FlowerBouquet className="guestbook__flower" />
           <h2 className="section-title">SỔ LƯU BÚT</h2>
           <input
             placeholder="Nhập tên*"

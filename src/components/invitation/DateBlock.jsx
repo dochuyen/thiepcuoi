@@ -1,4 +1,4 @@
-import { dateParts } from '../../utils/date.js';
+import { dateParts, formatTime } from '../../utils/date.js';
 
 /** Khối ngày kiểu "03 | THÁNG 01 / 2026" */
 export default function DateBlock({ date, time, lunarText, prefix }) {
@@ -7,7 +7,7 @@ export default function DateBlock({ date, time, lunarText, prefix }) {
     <div className="date-block">
       <div className="date-block__meta">
         {prefix && <span>{prefix} </span>}
-        <span>{time}</span> <span>{p.weekday}</span>
+        <span>{formatTime(time)}</span> <span>{p.weekday}</span>
       </div>
       <div className="date-block__main">
         <span className="date-block__day">{p.day}</span>

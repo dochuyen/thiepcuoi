@@ -1,4 +1,6 @@
 node_modules
 dist
-data/db.json
+data/*.json
 .env
+.firebase
+*-debug.log
